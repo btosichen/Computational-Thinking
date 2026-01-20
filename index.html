@@ -1,410 +1,435 @@
-import React, { useState } from 'react';
-import { 
-  Brain, 
-  Scissors, 
-  Search, 
-  Map, 
-  ListOrdered, 
-  ArrowRight, 
-  CheckCircle, 
-  Shirt, 
-  Layout, 
-  Mic, 
-  FileText,
-  User,
-  Utensils,
-  ChefHat,
-  Flame,
-  Circle
-} from 'lucide-react';
-
-const LessonApp = () => {
-  const [activeTab, setActiveTab] = useState('intro');
-
-  // Color Palette Definitions
-  const colors = {
-    decomposition: { bg: 'bg-blue-100', text: 'text-blue-600', border: 'border-blue-500', accent: 'bg-blue-500' },
-    pattern: { bg: 'bg-yellow-100', text: 'text-yellow-700', border: 'border-yellow-500', accent: 'bg-yellow-500' },
-    abstraction: { bg: 'bg-purple-100', text: 'text-purple-600', border: 'border-purple-500', accent: 'bg-purple-500' },
-    algorithm: { bg: 'bg-green-100', text: 'text-green-600', border: 'border-green-500', accent: 'bg-green-500' }
-  };
-
-  return (
-    <div className="min-h-screen bg-[#fdfbf7] font-sans text-gray-800 selection:bg-pink-200">
-      
-      {/* Navigation Header */}
-      <nav className="sticky top-0 z-50 bg-white shadow-md border-b-4 border-indigo-400">
-        <div className="max-w-4xl mx-auto px-4 py-3 flex justify-between items-center">
-          <div className="flex items-center gap-2">
-            <div className="bg-indigo-500 p-2 rounded-lg text-white">
-              <Brain size={24} />
-            </div>
-            <h1 className="text-xl font-bold text-indigo-900 tracking-wider">運算思維 CT 探險隊</h1>
-          </div>
-          <div className="hidden md:flex gap-2">
-            {[
-              { id: 'intro', label: '1. 什麼是 CT?' },
-              { id: 'steps', label: '2. 核心四步驟' },
-              { id: 'practice', label: '3. 早餐挑戰' }
-            ].map(tab => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={`px-4 py-2 rounded-full font-bold transition-all ${
-                  activeTab === tab.id 
-                  ? 'bg-indigo-500 text-white shadow-lg scale-105' 
-                  : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
-                }`}
-              >
-                {tab.label}
-              </button>
-            ))}
-          </div>
-        </div>
-        {/* Mobile Nav */}
-        <div className="md:hidden flex justify-around p-2 bg-indigo-50">
-           {[
-              { id: 'intro', label: '簡介' },
-              { id: 'steps', label: '四步驟' },
-              { id: 'practice', label: '實戰' }
-            ].map(tab => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={`text-sm font-bold px-3 py-1 rounded-full ${activeTab === tab.id ? 'bg-indigo-500 text-white' : 'text-gray-500'}`}
-              >
-                {tab.label}
-              </button>
-            ))}
-        </div>
-      </nav>
-
-      {/* Main Content Area */}
-      <main className="max-w-4xl mx-auto p-4 md:p-8 mb-12">
-        
-        {/* Unit 1: Introduction */}
-        {activeTab === 'intro' && (
-          <div className="space-y-8 animate-in fade-in zoom-in duration-500">
-            <div className="bg-white p-8 rounded-3xl shadow-xl border-2 border-indigo-100 relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-yellow-200 rounded-full -mr-16 -mt-16 opacity-50"></div>
-              
-              <h2 className="text-3xl font-extrabold text-center mb-6 text-indigo-800">
-                🧠 什麼是運算思維？
-                <span className="block text-lg font-normal text-indigo-500 mt-2">Computational Thinking</span>
-              </h2>
-
-              <div className="bg-indigo-50 p-6 rounded-2xl border-l-8 border-indigo-500 mb-8">
-                <p className="text-xl font-medium text-center text-indigo-900 leading-relaxed">
-                  「運算思維是一種<span className="bg-yellow-300 px-1 mx-1 rounded">把複雜問題變簡單</span>、<span className="bg-green-300 px-1 mx-1 rounded">一步一步解決問題</span>的思考方法。」
-                </p>
-                <p className="text-center text-gray-500 mt-2 text-sm">不只是寫程式，其實你每天都在用！</p>
-              </div>
-
-              {/* Illustration Area: Big Problem to Small Tasks */}
-              <div className="flex flex-col md:flex-row items-center justify-center gap-8 py-8 bg-gray-50 rounded-2xl border-2 border-dashed border-gray-300">
-                {/* Before */}
-                <div className="flex flex-col items-center group cursor-pointer">
-                  <div className="relative">
-                    <User size={80} className="text-gray-400" />
-                    <div className="absolute -top-4 -right-4 bg-red-500 text-white w-12 h-12 flex items-center justify-center rounded-full text-2xl font-bold animate-bounce shadow-lg">?</div>
-                  </div>
-                  <p className="mt-4 font-bold text-gray-600 bg-gray-200 px-4 py-1 rounded-full">期末報告好難！</p>
-                </div>
-
-                <ArrowRight size={40} className="text-indigo-400 rotate-90 md:rotate-0" />
-
-                {/* After */}
-                <div className="grid grid-cols-2 gap-4">
-                  {[
-                    { icon: Search, text: '查資料', color: 'bg-blue-100 text-blue-600' },
-                    { icon: FileText, text: '做簡報', color: 'bg-green-100 text-green-600' },
-                    { icon: Layout, text: '排版', color: 'bg-purple-100 text-purple-600' },
-                    { icon: Mic, text: '練習報告', color: 'bg-pink-100 text-pink-600' },
-                  ].map((item, idx) => (
-                    <div key={idx} className={`${item.color} p-3 rounded-xl flex flex-col items-center w-24 shadow-sm hover:scale-110 transition-transform`}>
-                      <item.icon size={24} />
-                      <span className="text-xs font-bold mt-1">{item.text}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <p className="text-center text-gray-400 text-sm mt-4">👆 就像這樣，把大魔王變成四個小史萊姆，就很好打敗了！</p>
-            </div>
-            
-            <div className="text-center">
-               <button onClick={() => setActiveTab('steps')} className="bg-indigo-600 text-white px-8 py-4 rounded-full text-lg font-bold shadow-lg hover:bg-indigo-700 hover:shadow-xl transition-all flex items-center gap-2 mx-auto">
-                 開始學習四個絕招 <ArrowRight />
-               </button>
-            </div>
-          </div>
-        )}
-
-        {/* Unit 2: The 4 Steps */}
-        {activeTab === 'steps' && (
-          <div className="space-y-12 animate-in slide-in-from-bottom duration-500">
-            <h2 className="text-2xl font-bold text-center text-gray-700">🧩 運算思維四步驟</h2>
-            
-            {/* Step 1: Decomposition */}
-            <StepSection 
-              number="01"
-              title="拆解"
-              english="Decomposition"
-              desc="把一個很大的問題，拆成很多小問題，事情就比較不會卡關。"
-              colors={colors.decomposition}
-              icon={Scissors}
-            >
-              {/* Illustration: Cleaning Room */}
-              <div className="bg-white p-4 rounded-xl shadow-inner flex flex-col items-center">
-                <div className="flex w-full justify-between items-center mb-2">
-                   <span className="bg-gray-200 text-gray-600 text-xs px-2 py-1 rounded">整理房間任務</span>
-                </div>
-                <div className="grid grid-cols-2 gap-3 w-full">
-                  <div className="bg-blue-50 p-3 rounded-lg border border-blue-200 text-center">
-                    <div className="mx-auto bg-blue-200 w-8 h-8 rounded-full flex items-center justify-center mb-1">🧹</div>
-                    <span className="text-sm font-bold text-blue-800">掃地</span>
-                  </div>
-                  <div className="bg-blue-50 p-3 rounded-lg border border-blue-200 text-center">
-                    <div className="mx-auto bg-blue-200 w-8 h-8 rounded-full flex items-center justify-center mb-1">🗑️</div>
-                    <span className="text-sm font-bold text-blue-800">分類</span>
-                  </div>
-                  <div className="bg-blue-50 p-3 rounded-lg border border-blue-200 text-center">
-                    <div className="mx-auto bg-blue-200 w-8 h-8 rounded-full flex items-center justify-center mb-1">👕</div>
-                    <span className="text-sm font-bold text-blue-800">收衣服</span>
-                  </div>
-                  <div className="bg-blue-50 p-3 rounded-lg border border-blue-200 text-center">
-                    <div className="mx-auto bg-blue-200 w-8 h-8 rounded-full flex items-center justify-center mb-1">📦</div>
-                    <span className="text-sm font-bold text-blue-800">放回櫃子</span>
-                  </div>
-                </div>
-              </div>
-            </StepSection>
-
-            {/* Step 2: Pattern Recognition */}
-            <StepSection 
-              number="02"
-              title="規律辨識"
-              english="Pattern Recognition"
-              desc="在很多小問題中，找出「重複出現的做法或規律」。"
-              colors={colors.pattern}
-              icon={Search}
-            >
-               {/* Illustration: Folding Clothes */}
-               <div className="bg-white p-4 rounded-xl shadow-inner flex flex-col items-center">
-                 <div className="flex justify-around w-full mb-4">
-                    <div className="text-center opacity-50"><Shirt size={32} className="text-red-400 mx-auto" /><span className="text-xs">T-shirt</span></div>
-                    <div className="text-center opacity-50"><Shirt size={32} className="text-blue-400 mx-auto" /><span className="text-xs">襯衫</span></div>
-                    <div className="text-center opacity-50"><Shirt size={32} className="text-green-400 mx-auto" /><span className="text-xs">外套</span></div>
-                 </div>
-                 <div className="bg-yellow-50 w-full p-3 rounded-lg border-2 border-dashed border-yellow-400 relative">
-                    <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-yellow-400 text-white text-xs px-2 py-1 rounded-full">發現規律！</div>
-                    <div className="flex justify-center items-center gap-2 text-yellow-800 font-bold">
-                       <span>折好</span> <ArrowRight size={16}/> <span>堆疊</span> <ArrowRight size={16}/> <span>收進去</span>
-                    </div>
-                 </div>
-               </div>
-            </StepSection>
-
-            {/* Step 3: Abstraction */}
-            <StepSection 
-              number="03"
-              title="抽象化"
-              english="Abstraction"
-              desc="只留下「最重要的重點」，不重要的細節先忽略。"
-              colors={colors.abstraction}
-              icon={Map}
-            >
-              {/* Illustration: Map */}
-              <div className="bg-white p-4 rounded-xl shadow-inner flex items-center justify-between gap-2">
-                 {/* Real World */}
-                 <div className="w-1/2 opacity-40 grayscale blur-[1px] flex flex-col items-center border p-2 rounded">
-                    <div className="flex gap-1 mb-1">
-                      <div className="w-4 h-8 bg-gray-400"></div><div className="w-6 h-6 bg-gray-500"></div>
-                    </div>
-                    <div className="w-full h-2 bg-gray-300"></div>
-                    <span className="text-xs mt-1">真實街道(太亂了)</span>
-                 </div>
-                 <ArrowRight className="text-purple-500" />
-                 {/* Abstract Map */}
-                 <div className="w-1/2 flex flex-col items-center border-2 border-purple-200 p-2 rounded bg-purple-50">
-                    <div className="flex items-center w-full justify-between px-2">
-                      <Circle size={12} className="fill-purple-500 text-purple-500" />
-                      <div className="h-1 bg-purple-500 flex-1 mx-1"></div>
-                      <Circle size={12} className="fill-purple-500 text-purple-500" />
-                    </div>
-                    <span className="text-xs mt-2 font-bold text-purple-700">只看路線與站名</span>
-                 </div>
-              </div>
-            </StepSection>
-
-             {/* Step 4: Algorithm Design */}
-             <StepSection 
-              number="04"
-              title="演算法設計"
-              english="Algorithm Design"
-              desc="把解決問題的方式，變成清楚、有順序的步驟。"
-              colors={colors.algorithm}
-              icon={ListOrdered}
-            >
-               {/* Illustration: Breakfast Algorithm */}
-               <div className="bg-white p-4 rounded-xl shadow-inner">
-                  <div className="flex flex-col gap-2">
-                     <AlgoStep step="1" text="備料" icon={Utensils} color="bg-green-100" />
-                     <div className="h-4 border-l-2 border-dashed border-gray-300 ml-4"></div>
-                     <AlgoStep step="2" text="開火" icon={Flame} color="bg-red-100" />
-                     <div className="h-4 border-l-2 border-dashed border-gray-300 ml-4"></div>
-                     <AlgoStep step="3" text="擺盤" icon={ChefHat} color="bg-orange-100" />
-                  </div>
-                  <div className="mt-3 text-right">
-                    <span className="text-xs bg-green-600 text-white px-2 py-1 rounded">SOP 完成</span>
-                  </div>
-               </div>
-            </StepSection>
-
-            <div className="text-center pt-8">
-               <button onClick={() => setActiveTab('practice')} className="bg-gradient-to-r from-orange-500 to-pink-500 text-white px-8 py-4 rounded-full text-lg font-bold shadow-lg hover:shadow-xl transition-all hover:scale-105">
-                 🔥 挑戰最後一關：生活應用
-               </button>
-            </div>
-          </div>
-        )}
-
-        {/* Unit 3: Integrated Application */}
-        {activeTab === 'practice' && (
-          <div className="animate-in zoom-in duration-500 space-y-8">
-             <div className="text-center mb-8">
-               <h2 className="text-3xl font-bold text-gray-800">🍳 任務：設計「做早餐」的方法</h2>
-               <p className="text-gray-500 mt-2">如何運用剛剛學到的四個步驟來完成一份完美的早餐？</p>
-             </div>
-
-             <div className="bg-white rounded-3xl shadow-xl overflow-hidden border-2 border-orange-100">
-               <div className="bg-orange-500 text-white p-4 text-center font-bold text-lg">
-                 運算思維大廚房
-               </div>
-               
-               <div className="grid md:grid-cols-2 gap-0">
-                 {/* Q1 Decomposition */}
-                 <div className="p-6 border-b md:border-b-0 md:border-r border-gray-100 hover:bg-blue-50 transition-colors">
-                   <div className="flex items-center gap-2 mb-3">
-                     <div className="bg-blue-500 text-white w-6 h-6 rounded flex items-center justify-center text-sm font-bold">1</div>
-                     <h3 className="font-bold text-blue-700">拆解 Decomposition</h3>
-                   </div>
-                   <p className="text-sm text-gray-600 mb-2">把「做早餐」這件事拆開：</p>
-                   <div className="flex gap-2 flex-wrap">
-                      {['買食材','切菜','煎蛋','烤土司','倒牛奶'].map(t => (
-                        <span key={t} className="bg-white border border-blue-200 text-blue-600 px-2 py-1 rounded text-xs">{t}</span>
-                      ))}
-                   </div>
-                 </div>
-
-                 {/* Q2 Pattern */}
-                 <div className="p-6 border-b border-gray-100 hover:bg-yellow-50 transition-colors">
-                   <div className="flex items-center gap-2 mb-3">
-                     <div className="bg-yellow-500 text-white w-6 h-6 rounded flex items-center justify-center text-sm font-bold">2</div>
-                     <h3 className="font-bold text-yellow-700">規律辨識 Pattern</h3>
-                   </div>
-                   <p className="text-sm text-gray-600 mb-2">發現這兩件事很像：</p>
-                   <div className="bg-white border border-yellow-200 p-2 rounded text-sm text-center">
-                      煎蛋 & 煎火腿 <br/>
-                      <span className="text-yellow-600 font-bold">都是「加熱食材」</span>
-                   </div>
-                 </div>
-
-                 {/* Q3 Abstraction */}
-                 <div className="p-6 border-b md:border-b-0 md:border-r border-gray-100 hover:bg-purple-50 transition-colors">
-                   <div className="flex items-center gap-2 mb-3">
-                     <div className="bg-purple-500 text-white w-6 h-6 rounded flex items-center justify-center text-sm font-bold">3</div>
-                     <h3 className="font-bold text-purple-700">抽象化 Abstraction</h3>
-                   </div>
-                   <p className="text-sm text-gray-600 mb-2">重點不是「用什麼鍋子」，而是...</p>
-                   <div className="flex items-center justify-between bg-white border border-purple-200 p-2 rounded">
-                      <span className="line-through text-gray-400 text-xs">粉紅色的平底鍋</span>
-                      <ArrowRight size={14} className="text-purple-400"/>
-                      <span className="text-purple-600 font-bold text-sm">加熱工具</span>
-                   </div>
-                 </div>
-
-                 {/* Q4 Algorithm */}
-                 <div className="p-6 hover:bg-green-50 transition-colors">
-                   <div className="flex items-center gap-2 mb-3">
-                     <div className="bg-green-500 text-white w-6 h-6 rounded flex items-center justify-center text-sm font-bold">4</div>
-                     <h3 className="font-bold text-green-700">演算法 Algorithm</h3>
-                   </div>
-                   <p className="text-sm text-gray-600 mb-2">寫成食譜步驟：</p>
-                   <div className="space-y-1">
-                      <div className="flex items-center gap-2 text-xs text-green-800">
-                        <CheckCircle size={12} /> 備料：拿出蛋與火腿
-                      </div>
-                      <div className="flex items-center gap-2 text-xs text-green-800">
-                        <CheckCircle size={12} /> 加熱：開火煎熟
-                      </div>
-                      <div className="flex items-center gap-2 text-xs text-green-800">
-                        <CheckCircle size={12} /> 擺盤：放到吐司上
-                      </div>
-                   </div>
-                 </div>
-               </div>
-             </div>
-             
-             <div className="bg-indigo-900 text-white p-8 rounded-3xl text-center shadow-lg mt-8">
-               <h3 className="text-2xl font-bold mb-2">🎉 恭喜你完成學習！</h3>
-               <p className="opacity-80">你已經具備了資訊工程師的思考大腦囉！</p>
-             </div>
-          </div>
-        )}
-
-      </main>
-
-      {/* Footer */}
-      <footer className="bg-indigo-50 border-t border-indigo-100 py-6 text-center text-indigo-300 text-sm">
-        <p>國中八年級資訊科技教材設計範例 | Designed by AI</p>
-      </footer>
-    </div>
-  );
-};
-
-// Sub-component for individual step cards
-const StepSection = ({ number, title, english, desc, colors, icon: Icon, children }) => (
-  <div className={`rounded-3xl border-2 ${colors.border} overflow-hidden shadow-lg transition-transform hover:-translate-y-1`}>
-    <div className={`${colors.bg} p-4 flex items-center justify-between`}>
-      <div className="flex items-center gap-3">
-        <div className={`${colors.accent} text-white w-10 h-10 rounded-full flex items-center justify-center font-black text-lg shadow`}>
-          {number}
-        </div>
-        <div>
-          <h3 className={`text-xl font-bold ${colors.text}`}>{title}</h3>
-          <span className="text-xs uppercase tracking-wider font-semibold opacity-70">{english}</span>
-        </div>
-      </div>
-      <Icon className={`${colors.text} opacity-20`} size={48} />
-    </div>
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>運算思維 CT 探險隊</title>
     
-    <div className="bg-white p-6 grid md:grid-cols-2 gap-6 items-center">
-      {/* Text Content */}
-      <div>
-        <h4 className="font-bold text-gray-800 mb-2 text-lg">學生版解釋：</h4>
-        <p className="text-gray-600 leading-relaxed mb-4">{desc}</p>
-        <div className="inline-block bg-gray-100 px-3 py-1 rounded-lg text-sm font-medium text-gray-500">
-          📍 生活例子
-        </div>
-      </div>
-      
-      {/* Illustration Box */}
-      <div className="bg-gray-50 rounded-2xl p-4 border-2 border-dashed border-gray-200 flex flex-col justify-center min-h-[160px]">
-        {children}
-      </div>
-    </div>
-  </div>
-);
+    <!-- 1. 引入 React 核心 -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    
+    <!-- 2. 引入 Babel (讓瀏覽器看得懂 JSX) -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <!-- 3. 引入 Tailwind CSS (快速樣式) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- 4. 引入 FontAwesome (圖示庫) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-// Simple List Item for Algorithm
-const AlgoStep = ({ step, text, icon: Icon, color }) => (
-  <div className="flex items-center gap-3">
-     <div className="bg-gray-800 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold shrink-0">{step}</div>
-     <div className={`flex-1 ${color} p-2 rounded flex items-center gap-2`}>
-        <Icon size={16} className="text-gray-700"/>
-        <span className="font-bold text-sm text-gray-800">{text}</span>
-     </div>
-  </div>
-);
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&display=swap');
+        body { font-family: 'Noto Sans TC', sans-serif; }
+        
+        /* 自定義動畫 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fadeIn {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="bg-[#fdfbf7]">
+    
+    <div id="root"></div>
 
-export default LessonApp;
+    <script type="text/babel">
+        const { useState } = React;
+
+        const LessonApp = () => {
+            const [activeTab, setActiveTab] = useState('intro');
+
+            // 配色定義
+            const colors = {
+                decomposition: { bg: 'bg-blue-100', text: 'text-blue-600', border: 'border-blue-500', accent: 'bg-blue-500' },
+                pattern: { bg: 'bg-yellow-100', text: 'text-yellow-700', border: 'border-yellow-500', accent: 'bg-yellow-500' },
+                abstraction: { bg: 'bg-purple-100', text: 'text-purple-600', border: 'border-purple-500', accent: 'bg-purple-500' },
+                algorithm: { bg: 'bg-green-100', text: 'text-green-600', border: 'border-green-500', accent: 'bg-green-500' }
+            };
+
+            return (
+                <div className="min-h-screen text-gray-800 selection:bg-pink-200 pb-12">
+                
+                {/* 導覽列 */}
+                <nav className="sticky top-0 z-50 bg-white shadow-md border-b-4 border-indigo-400">
+                    <div className="max-w-4xl mx-auto px-4 py-3 flex justify-between items-center">
+                    <div className="flex items-center gap-2">
+                        <div className="bg-indigo-500 p-2 rounded-lg text-white w-10 h-10 flex items-center justify-center">
+                            <i className="fa-solid fa-brain text-xl"></i>
+                        </div>
+                        <h1 className="text-xl font-bold text-indigo-900 tracking-wider">運算思維 CT 探險隊</h1>
+                    </div>
+                    <div className="hidden md:flex gap-2">
+                        {[
+                        { id: 'intro', label: '1. 什麼是 CT?' },
+                        { id: 'steps', label: '2. 核心四步驟' },
+                        { id: 'practice', label: '3. 早餐挑戰' }
+                        ].map(tab => (
+                        <button
+                            key={tab.id}
+                            onClick={() => setActiveTab(tab.id)}
+                            className={`px-4 py-2 rounded-full font-bold transition-all ${
+                            activeTab === tab.id 
+                            ? 'bg-indigo-500 text-white shadow-lg scale-105' 
+                            : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
+                            }`}
+                        >
+                            {tab.label}
+                        </button>
+                        ))}
+                    </div>
+                    </div>
+                    {/* 手機版選單 */}
+                    <div className="md:hidden flex justify-around p-2 bg-indigo-50">
+                    {[
+                        { id: 'intro', label: '簡介' },
+                        { id: 'steps', label: '四步驟' },
+                        { id: 'practice', label: '實戰' }
+                        ].map(tab => (
+                        <button
+                            key={tab.id}
+                            onClick={() => setActiveTab(tab.id)}
+                            className={`text-sm font-bold px-3 py-1 rounded-full ${activeTab === tab.id ? 'bg-indigo-500 text-white' : 'text-gray-500'}`}
+                        >
+                            {tab.label}
+                        </button>
+                        ))}
+                    </div>
+                </nav>
+
+                {/* 主要內容區 */}
+                <main className="max-w-4xl mx-auto p-4 md:p-8">
+                    
+                    {/* 單元一：簡介 */}
+                    {activeTab === 'intro' && (
+                    <div className="space-y-8 animate-fadeIn">
+                        <div className="bg-white p-8 rounded-3xl shadow-xl border-2 border-indigo-100 relative overflow-hidden">
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-yellow-200 rounded-full -mr-16 -mt-16 opacity-50"></div>
+                        
+                        <h2 className="text-3xl font-extrabold text-center mb-6 text-indigo-800">
+                            🧠 什麼是運算思維？
+                            <span className="block text-lg font-normal text-indigo-500 mt-2">Computational Thinking</span>
+                        </h2>
+
+                        <div className="bg-indigo-50 p-6 rounded-2xl border-l-8 border-indigo-500 mb-8">
+                            <p className="text-xl font-medium text-center text-indigo-900 leading-relaxed">
+                            「運算思維是一種<span className="bg-yellow-300 px-1 mx-1 rounded">把複雜問題變簡單</span>、<span className="bg-green-300 px-1 mx-1 rounded">一步一步解決問題</span>的思考方法。」
+                            </p>
+                            <p className="text-center text-gray-500 mt-2 text-sm">不只是寫程式，其實你每天都在用！</p>
+                        </div>
+
+                        {/* 插圖區：大問題變小任務 */}
+                        <div className="flex flex-col md:flex-row items-center justify-center gap-8 py-8 bg-gray-50 rounded-2xl border-2 border-dashed border-gray-300">
+                            {/* Before */}
+                            <div className="flex flex-col items-center group cursor-pointer">
+                            <div className="relative">
+                                <i className="fa-solid fa-user text-gray-400 text-6xl"></i>
+                                <div className="absolute -top-4 -right-4 bg-red-500 text-white w-12 h-12 flex items-center justify-center rounded-full text-2xl font-bold animate-bounce shadow-lg">?</div>
+                            </div>
+                            <p className="mt-4 font-bold text-gray-600 bg-gray-200 px-4 py-1 rounded-full">期末報告好難！</p>
+                            </div>
+
+                            <i className="fa-solid fa-arrow-right text-indigo-400 text-4xl rotate-90 md:rotate-0"></i>
+
+                            {/* After */}
+                            <div className="grid grid-cols-2 gap-4">
+                            {[
+                                { icon: 'fa-magnifying-glass', text: '查資料', color: 'bg-blue-100 text-blue-600' },
+                                { icon: 'fa-file-lines', text: '做簡報', color: 'bg-green-100 text-green-600' },
+                                { icon: 'fa-table-columns', text: '排版', color: 'bg-purple-100 text-purple-600' },
+                                { icon: 'fa-microphone', text: '練習報告', color: 'bg-pink-100 text-pink-600' },
+                            ].map((item, idx) => (
+                                <div key={idx} className={`${item.color} p-3 rounded-xl flex flex-col items-center w-24 shadow-sm hover:scale-110 transition-transform`}>
+                                <i className={`fa-solid ${item.icon} text-2xl`}></i>
+                                <span className="text-xs font-bold mt-1">{item.text}</span>
+                                </div>
+                            ))}
+                            </div>
+                        </div>
+                        <p className="text-center text-gray-400 text-sm mt-4">👆 就像這樣，把大魔王變成四個小史萊姆，就很好打敗了！</p>
+                        </div>
+                        
+                        <div className="text-center">
+                        <button onClick={() => setActiveTab('steps')} className="bg-indigo-600 text-white px-8 py-4 rounded-full text-lg font-bold shadow-lg hover:bg-indigo-700 hover:shadow-xl transition-all inline-flex items-center gap-2">
+                            開始學習四個絕招 <i className="fa-solid fa-arrow-right"></i>
+                        </button>
+                        </div>
+                    </div>
+                    )}
+
+                    {/* 單元二：四步驟 */}
+                    {activeTab === 'steps' && (
+                    <div className="space-y-12 animate-fadeIn">
+                        <h2 className="text-2xl font-bold text-center text-gray-700">🧩 運算思維四步驟</h2>
+                        
+                        {/* Step 1: Decomposition */}
+                        <StepSection 
+                        number="01"
+                        title="拆解"
+                        english="Decomposition"
+                        desc="把一個很大的問題，拆成很多小問題，事情就比較不會卡關。"
+                        colors={colors.decomposition}
+                        iconClass="fa-scissors"
+                        >
+                        {/* Illustration: Cleaning Room */}
+                        <div className="bg-white p-4 rounded-xl shadow-inner flex flex-col items-center w-full">
+                            <div className="flex w-full justify-between items-center mb-2">
+                            <span className="bg-gray-200 text-gray-600 text-xs px-2 py-1 rounded">整理房間任務</span>
+                            </div>
+                            <div className="grid grid-cols-2 gap-3 w-full">
+                            <div className="bg-blue-50 p-3 rounded-lg border border-blue-200 text-center">
+                                <div className="mx-auto bg-blue-200 w-8 h-8 rounded-full flex items-center justify-center mb-1">🧹</div>
+                                <span className="text-sm font-bold text-blue-800">掃地</span>
+                            </div>
+                            <div className="bg-blue-50 p-3 rounded-lg border border-blue-200 text-center">
+                                <div className="mx-auto bg-blue-200 w-8 h-8 rounded-full flex items-center justify-center mb-1">🗑️</div>
+                                <span className="text-sm font-bold text-blue-800">分類</span>
+                            </div>
+                            <div className="bg-blue-50 p-3 rounded-lg border border-blue-200 text-center">
+                                <div className="mx-auto bg-blue-200 w-8 h-8 rounded-full flex items-center justify-center mb-1">👕</div>
+                                <span className="text-sm font-bold text-blue-800">收衣服</span>
+                            </div>
+                            <div className="bg-blue-50 p-3 rounded-lg border border-blue-200 text-center">
+                                <div className="mx-auto bg-blue-200 w-8 h-8 rounded-full flex items-center justify-center mb-1">📦</div>
+                                <span className="text-sm font-bold text-blue-800">放回櫃子</span>
+                            </div>
+                            </div>
+                        </div>
+                        </StepSection>
+
+                        {/* Step 2: Pattern Recognition */}
+                        <StepSection 
+                        number="02"
+                        title="規律辨識"
+                        english="Pattern Recognition"
+                        desc="在很多小問題中，找出「重複出現的做法或規律」。"
+                        colors={colors.pattern}
+                        iconClass="fa-magnifying-glass"
+                        >
+                        {/* Illustration: Folding Clothes */}
+                        <div className="bg-white p-4 rounded-xl shadow-inner flex flex-col items-center w-full">
+                            <div className="flex justify-around w-full mb-4">
+                                <div className="text-center opacity-50"><i className="fa-solid fa-shirt text-red-400 text-3xl mx-auto block"></i><span className="text-xs">T-shirt</span></div>
+                                <div className="text-center opacity-50"><i className="fa-solid fa-shirt text-blue-400 text-3xl mx-auto block"></i><span className="text-xs">襯衫</span></div>
+                                <div className="text-center opacity-50"><i className="fa-solid fa-shirt text-green-400 text-3xl mx-auto block"></i><span className="text-xs">外套</span></div>
+                            </div>
+                            <div className="bg-yellow-50 w-full p-3 rounded-lg border-2 border-dashed border-yellow-400 relative mt-2">
+                                <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-yellow-400 text-white text-xs px-2 py-1 rounded-full whitespace-nowrap">發現規律！</div>
+                                <div className="flex justify-center items-center gap-2 text-yellow-800 font-bold text-sm">
+                                <span>折好</span> <i className="fa-solid fa-arrow-right"></i> <span>堆疊</span> <i className="fa-solid fa-arrow-right"></i> <span>收進去</span>
+                                </div>
+                            </div>
+                        </div>
+                        </StepSection>
+
+                        {/* Step 3: Abstraction */}
+                        <StepSection 
+                        number="03"
+                        title="抽象化"
+                        english="Abstraction"
+                        desc="只留下「最重要的重點」，不重要的細節先忽略。"
+                        colors={colors.abstraction}
+                        iconClass="fa-map-location-dot"
+                        >
+                        {/* Illustration: Map */}
+                        <div className="bg-white p-4 rounded-xl shadow-inner flex items-center justify-between gap-2 w-full">
+                            {/* Real World */}
+                            <div className="w-1/2 opacity-40 grayscale blur-[1px] flex flex-col items-center border p-2 rounded bg-gray-100">
+                                <div className="flex gap-1 mb-1">
+                                <div className="w-4 h-8 bg-gray-400"></div><div className="w-6 h-6 bg-gray-500"></div>
+                                </div>
+                                <div className="w-full h-2 bg-gray-300"></div>
+                                <span className="text-xs mt-1">真實街道(太亂)</span>
+                            </div>
+                            <i className="fa-solid fa-arrow-right text-purple-500"></i>
+                            {/* Abstract Map */}
+                            <div className="w-1/2 flex flex-col items-center border-2 border-purple-200 p-2 rounded bg-purple-50">
+                                <div className="flex items-center w-full justify-between px-2">
+                                <i className="fa-solid fa-circle text-purple-500 text-[10px]"></i>
+                                <div className="h-1 bg-purple-500 flex-1 mx-1"></div>
+                                <i className="fa-solid fa-circle text-purple-500 text-[10px]"></i>
+                                </div>
+                                <span className="text-xs mt-2 font-bold text-purple-700">只看路線</span>
+                            </div>
+                        </div>
+                        </StepSection>
+
+                        {/* Step 4: Algorithm Design */}
+                        <StepSection 
+                        number="04"
+                        title="演算法設計"
+                        english="Algorithm Design"
+                        desc="把解決問題的方式，變成清楚、有順序的步驟。"
+                        colors={colors.algorithm}
+                        iconClass="fa-list-ol"
+                        >
+                        {/* Illustration: Breakfast Algorithm */}
+                        <div className="bg-white p-4 rounded-xl shadow-inner w-full">
+                            <div className="flex flex-col gap-2">
+                                <AlgoStep step="1" text="備料" iconClass="fa-utensils" color="bg-green-100" />
+                                <div className="h-4 border-l-2 border-dashed border-gray-300 ml-4"></div>
+                                <AlgoStep step="2" text="開火" iconClass="fa-fire" color="bg-red-100" />
+                                <div className="h-4 border-l-2 border-dashed border-gray-300 ml-4"></div>
+                                <AlgoStep step="3" text="擺盤" iconClass="fa-plate-wheat" color="bg-orange-100" />
+                            </div>
+                            <div className="mt-3 text-right">
+                                <span className="text-xs bg-green-600 text-white px-2 py-1 rounded">SOP 完成</span>
+                            </div>
+                        </div>
+                        </StepSection>
+
+                        <div className="text-center pt-8">
+                        <button onClick={() => setActiveTab('practice')} className="bg-gradient-to-r from-orange-500 to-pink-500 text-white px-8 py-4 rounded-full text-lg font-bold shadow-lg hover:shadow-xl transition-all hover:scale-105">
+                            🔥 挑戰最後一關：生活應用
+                        </button>
+                        </div>
+                    </div>
+                    )}
+
+                    {/* 單元三：實戰應用 */}
+                    {activeTab === 'practice' && (
+                    <div className="animate-fadeIn space-y-8">
+                        <div className="text-center mb-8">
+                        <h2 className="text-3xl font-bold text-gray-800">🍳 任務：設計「做早餐」的方法</h2>
+                        <p className="text-gray-500 mt-2">如何運用剛剛學到的四個步驟來完成一份完美的早餐？</p>
+                        </div>
+
+                        <div className="bg-white rounded-3xl shadow-xl overflow-hidden border-2 border-orange-100">
+                        <div className="bg-orange-500 text-white p-4 text-center font-bold text-lg">
+                            運算思維大廚房
+                        </div>
+                        
+                        <div className="grid md:grid-cols-2 gap-0">
+                            {/* Q1 Decomposition */}
+                            <div className="p-6 border-b md:border-b-0 md:border-r border-gray-100 hover:bg-blue-50 transition-colors">
+                            <div className="flex items-center gap-2 mb-3">
+                                <div className="bg-blue-500 text-white w-6 h-6 rounded flex items-center justify-center text-sm font-bold">1</div>
+                                <h3 className="font-bold text-blue-700">拆解 Decomposition</h3>
+                            </div>
+                            <p className="text-sm text-gray-600 mb-2">把「做早餐」這件事拆開：</p>
+                            <div className="flex gap-2 flex-wrap">
+                                {['買食材','切菜','煎蛋','烤土司','倒牛奶'].map(t => (
+                                    <span key={t} className="bg-white border border-blue-200 text-blue-600 px-2 py-1 rounded text-xs">{t}</span>
+                                ))}
+                            </div>
+                            </div>
+
+                            {/* Q2 Pattern */}
+                            <div className="p-6 border-b border-gray-100 hover:bg-yellow-50 transition-colors">
+                            <div className="flex items-center gap-2 mb-3">
+                                <div className="bg-yellow-500 text-white w-6 h-6 rounded flex items-center justify-center text-sm font-bold">2</div>
+                                <h3 className="font-bold text-yellow-700">規律辨識 Pattern</h3>
+                            </div>
+                            <p className="text-sm text-gray-600 mb-2">發現這兩件事很像：</p>
+                            <div className="bg-white border border-yellow-200 p-2 rounded text-sm text-center">
+                                煎蛋 & 煎火腿 <br/>
+                                <span className="text-yellow-600 font-bold">都是「加熱食材」</span>
+                            </div>
+                            </div>
+
+                            {/* Q3 Abstraction */}
+                            <div className="p-6 border-b md:border-b-0 md:border-r border-gray-100 hover:bg-purple-50 transition-colors">
+                            <div className="flex items-center gap-2 mb-3">
+                                <div className="bg-purple-500 text-white w-6 h-6 rounded flex items-center justify-center text-sm font-bold">3</div>
+                                <h3 className="font-bold text-purple-700">抽象化 Abstraction</h3>
+                            </div>
+                            <p className="text-sm text-gray-600 mb-2">重點不是「用什麼鍋子」，而是...</p>
+                            <div className="flex items-center justify-between bg-white border border-purple-200 p-2 rounded">
+                                <span className="line-through text-gray-400 text-xs">粉紅色的平底鍋</span>
+                                <i className="fa-solid fa-arrow-right text-purple-400"></i>
+                                <span className="text-purple-600 font-bold text-sm">加熱工具</span>
+                            </div>
+                            </div>
+
+                            {/* Q4 Algorithm */}
+                            <div className="p-6 hover:bg-green-50 transition-colors">
+                            <div className="flex items-center gap-2 mb-3">
+                                <div className="bg-green-500 text-white w-6 h-6 rounded flex items-center justify-center text-sm font-bold">4</div>
+                                <h3 className="font-bold text-green-700">演算法 Algorithm</h3>
+                            </div>
+                            <p className="text-sm text-gray-600 mb-2">寫成食譜步驟：</p>
+                            <div className="space-y-1">
+                                <div className="flex items-center gap-2 text-xs text-green-800">
+                                    <i className="fa-solid fa-check-circle"></i> 備料：拿出蛋與火腿
+                                </div>
+                                <div className="flex items-center gap-2 text-xs text-green-800">
+                                    <i className="fa-solid fa-check-circle"></i> 加熱：開火煎熟
+                                </div>
+                                <div className="flex items-center gap-2 text-xs text-green-800">
+                                    <i className="fa-solid fa-check-circle"></i> 擺盤：放到吐司上
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+                        
+                        <div className="bg-indigo-900 text-white p-8 rounded-3xl text-center shadow-lg mt-8 mb-8">
+                        <h3 className="text-2xl font-bold mb-2">🎉 恭喜你完成學習！</h3>
+                        <p className="opacity-80">你已經具備了資訊工程師的思考大腦囉！</p>
+                        </div>
+                    </div>
+                    )}
+
+                </main>
+
+                {/* Footer */}
+                <footer className="bg-indigo-50 border-t border-indigo-100 py-6 text-center text-indigo-300 text-sm">
+                    <p>國中八年級資訊科技教材設計範例 | Designed by AI</p>
+                </footer>
+                </div>
+            );
+        };
+
+        // 子元件：步驟卡片
+        const StepSection = ({ number, title, english, desc, colors, iconClass, children }) => (
+            <div className={`rounded-3xl border-2 ${colors.border} overflow-hidden shadow-lg transition-transform hover:-translate-y-1`}>
+                <div className={`${colors.bg} p-4 flex items-center justify-between`}>
+                <div className="flex items-center gap-3">
+                    <div className={`${colors.accent} text-white w-10 h-10 rounded-full flex items-center justify-center font-black text-lg shadow`}>
+                    {number}
+                    </div>
+                    <div>
+                    <h3 className={`text-xl font-bold ${colors.text}`}>{title}</h3>
+                    <span className="text-xs uppercase tracking-wider font-semibold opacity-70">{english}</span>
+                    </div>
+                </div>
+                <i className={`fa-solid ${iconClass} ${colors.text} opacity-20 text-5xl`}></i>
+                </div>
+                
+                <div className="bg-white p-6 grid md:grid-cols-2 gap-6 items-center">
+                {/* 文字區 */}
+                <div>
+                    <h4 className="font-bold text-gray-800 mb-2 text-lg">學生版解釋：</h4>
+                    <p className="text-gray-600 leading-relaxed mb-4">{desc}</p>
+                    <div className="inline-block bg-gray-100 px-3 py-1 rounded-lg text-sm font-medium text-gray-500">
+                    📍 生活例子
+                    </div>
+                </div>
+                
+                {/* 插圖區 */}
+                <div className="bg-gray-50 rounded-2xl p-4 border-2 border-dashed border-gray-200 flex flex-col justify-center min-h-[160px] items-center">
+                    {children}
+                </div>
+                </div>
+            </div>
+        );
+
+        // 子元件：演算法步驟
+        const AlgoStep = ({ step, text, iconClass, color }) => (
+            <div className="flex items-center gap-3">
+                <div className="bg-gray-800 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold shrink-0">{step}</div>
+                <div className={`flex-1 ${color} p-2 rounded flex items-center gap-2`}>
+                    <i className={`fa-solid ${iconClass} text-gray-700`}></i>
+                    <span className="font-bold text-sm text-gray-800">{text}</span>
+                </div>
+            </div>
+        );
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<LessonApp />);
+    </script>
+</body>
+</html>
