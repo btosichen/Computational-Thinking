@@ -41,6 +41,7 @@
 
         const LessonApp = () => {
             const [activeTab, setActiveTab] = useState('intro');
+            const [practiceScenario, setPracticeScenario] = useState('breakfast'); // 'breakfast' or 'essay'
 
             // 配色定義
             const colors = {
@@ -66,7 +67,7 @@
                         {[
                         { id: 'intro', label: '1. 什麼是 CT?' },
                         { id: 'steps', label: '2. 核心四步驟' },
-                        { id: 'practice', label: '3. 早餐挑戰' }
+                        { id: 'practice', label: '3. 生活應用挑戰' }
                         ].map(tab => (
                         <button
                             key={tab.id}
@@ -293,13 +294,31 @@
                     {activeTab === 'practice' && (
                     <div className="animate-fadeIn space-y-8">
                         <div className="text-center mb-8">
-                        <h2 className="text-3xl font-bold text-gray-800">🍳 任務：設計「做早餐」的方法</h2>
-                        <p className="text-gray-500 mt-2">如何運用剛剛學到的四個步驟來完成一份完美的早餐？</p>
+                            <h2 className="text-3xl font-bold text-gray-800">🛠️ 運算思維實戰</h2>
+                            <p className="text-gray-500 mt-2">請選擇一個情境，看看怎麼運用四步驟來解決！</p>
+                            
+                            {/* 情境切換按鈕 */}
+                            <div className="flex justify-center gap-4 mt-6">
+                                <button 
+                                    onClick={() => setPracticeScenario('breakfast')}
+                                    className={`px-6 py-3 rounded-xl border-2 transition-all flex items-center gap-2 ${practiceScenario === 'breakfast' ? 'bg-orange-100 border-orange-500 text-orange-700 shadow-md transform scale-105' : 'bg-white border-gray-200 text-gray-500 hover:bg-gray-50'}`}
+                                >
+                                    <i className="fa-solid fa-utensils"></i> 做早餐
+                                </button>
+                                <button 
+                                    onClick={() => setPracticeScenario('essay')}
+                                    className={`px-6 py-3 rounded-xl border-2 transition-all flex items-center gap-2 ${practiceScenario === 'essay' ? 'bg-blue-100 border-blue-500 text-blue-700 shadow-md transform scale-105' : 'bg-white border-gray-200 text-gray-500 hover:bg-gray-50'}`}
+                                >
+                                    <i className="fa-solid fa-pen-nib"></i> 寫作文
+                                </button>
+                            </div>
                         </div>
 
-                        <div className="bg-white rounded-3xl shadow-xl overflow-hidden border-2 border-orange-100">
-                        <div className="bg-orange-500 text-white p-4 text-center font-bold text-lg">
-                            運算思維大廚房
+                        {/* 早餐情境內容 */}
+                        {practiceScenario === 'breakfast' && (
+                        <div className="bg-white rounded-3xl shadow-xl overflow-hidden border-2 border-orange-100 animate-fadeIn">
+                        <div className="bg-orange-500 text-white p-4 text-center font-bold text-lg flex items-center justify-center gap-2">
+                            <i className="fa-solid fa-egg"></i> 運算思維大廚房
                         </div>
                         
                         <div className="grid md:grid-cols-2 gap-0">
@@ -365,6 +384,79 @@
                             </div>
                         </div>
                         </div>
+                        )}
+
+                        {/* 作文情境內容 (New) */}
+                        {practiceScenario === 'essay' && (
+                        <div className="bg-white rounded-3xl shadow-xl overflow-hidden border-2 border-blue-100 animate-fadeIn">
+                        <div className="bg-blue-600 text-white p-4 text-center font-bold text-lg flex items-center justify-center gap-2">
+                            <i className="fa-solid fa-feather-pointed"></i> 作文大師養成班
+                        </div>
+                        
+                        <div className="grid md:grid-cols-2 gap-0">
+                            {/* Q1 Decomposition */}
+                            <div className="p-6 border-b md:border-b-0 md:border-r border-gray-100 hover:bg-blue-50 transition-colors">
+                            <div className="flex items-center gap-2 mb-3">
+                                <div className="bg-blue-500 text-white w-6 h-6 rounded flex items-center justify-center text-sm font-bold">1</div>
+                                <h3 className="font-bold text-blue-700">拆解 Decomposition</h3>
+                            </div>
+                            <p className="text-sm text-gray-600 mb-2">把「寫一篇文章」拆成小任務：</p>
+                            <div className="flex gap-2 flex-wrap">
+                                {['蒐集資料','列大綱','寫初稿','修改潤飾'].map(t => (
+                                    <span key={t} className="bg-white border border-blue-200 text-blue-600 px-2 py-1 rounded text-xs">{t}</span>
+                                ))}
+                            </div>
+                            </div>
+
+                            {/* Q2 Pattern */}
+                            <div className="p-6 border-b border-gray-100 hover:bg-yellow-50 transition-colors">
+                            <div className="flex items-center gap-2 mb-3">
+                                <div className="bg-yellow-500 text-white w-6 h-6 rounded flex items-center justify-center text-sm font-bold">2</div>
+                                <h3 className="font-bold text-yellow-700">規律辨識 Pattern</h3>
+                            </div>
+                            <p className="text-sm text-gray-600 mb-2">發現段落結構都很像：</p>
+                            <div className="bg-white border border-yellow-200 p-2 rounded text-sm text-center">
+                                第一段 & 第二段 <br/>
+                                <span className="text-yellow-600 font-bold">都要有「主題句 + 舉例」</span>
+                            </div>
+                            </div>
+
+                            {/* Q3 Abstraction */}
+                            <div className="p-6 border-b md:border-b-0 md:border-r border-gray-100 hover:bg-purple-50 transition-colors">
+                            <div className="flex items-center gap-2 mb-3">
+                                <div className="bg-purple-500 text-white w-6 h-6 rounded flex items-center justify-center text-sm font-bold">3</div>
+                                <h3 className="font-bold text-purple-700">抽象化 Abstraction</h3>
+                            </div>
+                            <p className="text-sm text-gray-600 mb-2">只保留重點，不重要的細節...</p>
+                            <div className="flex items-center justify-between bg-white border border-purple-200 p-2 rounded">
+                                <span className="line-through text-gray-400 text-xs">過多的形容詞/廢話</span>
+                                <i className="fa-solid fa-arrow-right text-purple-400"></i>
+                                <span className="text-purple-600 font-bold text-sm">核心論點</span>
+                            </div>
+                            </div>
+
+                            {/* Q4 Algorithm */}
+                            <div className="p-6 hover:bg-green-50 transition-colors">
+                            <div className="flex items-center gap-2 mb-3">
+                                <div className="bg-green-500 text-white w-6 h-6 rounded flex items-center justify-center text-sm font-bold">4</div>
+                                <h3 className="font-bold text-green-700">演算法 Algorithm</h3>
+                            </div>
+                            <p className="text-sm text-gray-600 mb-2">建立寫作SOP流程：</p>
+                            <div className="space-y-1">
+                                <div className="flex items-center gap-2 text-xs text-green-800">
+                                    <i className="fa-solid fa-1 text-green-500"></i> 找資料 <i className="fa-solid fa-arrow-right text-gray-300"></i> 列大綱
+                                </div>
+                                <div className="flex items-center gap-2 text-xs text-green-800">
+                                    <i className="fa-solid fa-2 text-green-500"></i> 寫初稿 <i className="fa-solid fa-arrow-right text-gray-300"></i> 檢查修改
+                                </div>
+                                <div className="flex items-center gap-2 text-xs text-green-800">
+                                    <i className="fa-solid fa-check-double text-green-500"></i> 完成！
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+                        )}
                         
                         <div className="bg-indigo-900 text-white p-8 rounded-3xl text-center shadow-lg mt-8 mb-8">
                         <h3 className="text-2xl font-bold mb-2">🎉 恭喜你完成學習！</h3>
@@ -376,8 +468,9 @@
                 </main>
 
                 {/* Footer */}
-                <footer className="bg-indigo-50 border-t border-indigo-100 py-6 text-center text-indigo-300 text-sm">
+                <footer className="bg-indigo-50 border-t border-indigo-100 py-6 text-center text-indigo-400 text-xs space-y-1">
                     <p>國中八年級資訊科技教材設計範例 | Designed by AI</p>
+                    <p>參考資料：教育部運算思維推動計畫簡報</p>
                 </footer>
                 </div>
             );
